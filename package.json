@@ -1,7 +1,7 @@
 {
   "name": "request-lit",
   "description": "Small Promise based HTTP client",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "Joel Voss <mail@joelvoss.com",
   "license": "MIT",
   "homepage": "https://github.com/joelvoss/request-lit",
