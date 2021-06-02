@@ -1,0 +1,49 @@
+{
+  "name": "request-lit",
+  "description": "Small Promise based HTTP client",
+  "version": "0.0.1",
+  "author": "Joel Voss <mail@joelvoss.com",
+  "license": "MIT",
+  "homepage": "https://github.com/joelvoss/request-lit",
+  "bugs": {
+    "url": "https://github.com/joelvoss/request-lit/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joelvoss/request-lit.git"
+  },
+  "source": "src/index.js",
+  "main": "dist/request-lit.js",
+  "module": "dist/request-lit.m.js",
+  "exports": {
+    "require": "./dist/request-lit.js",
+    "default": "./dist/request-lit.modern.js"
+  },
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "./Taskfile.sh",
+    "test": "./Taskfile.sh test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@jvdx/core": "^2.3.4",
+    "isomorphic-fetch": "^3.0.0",
+    "msw": "^0.29.0"
+  },
+  "prettier": "@jvdx/prettier-config",
+  "prettierIgnore": [
+    "tests/",
+    "dist/"
+  ],
+  "eslintConfig": {
+    "extends": "@jvdx/eslint-config"
+  },
+  "eslintIgnore": [
+    "tests/",
+    "dist/"
+  ]
+}
