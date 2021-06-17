@@ -30,7 +30,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@jvdx/core": "^2.3.4",
+    "@jvdx/core": "^2.3.6",
     "isomorphic-fetch": "^3.0.0",
     "msw": "^0.29.0"
   },
