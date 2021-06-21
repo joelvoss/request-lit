@@ -25,8 +25,8 @@
     "LICENSE"
   ],
   "scripts": {
-    "start": "./Taskfile.sh",
-    "test": "./Taskfile.sh test"
+    "test": "./Taskfile.sh test",
+    "prepublishOnly": "./Taskfile.sh build"
   },
   "dependencies": {},
   "devDependencies": {
