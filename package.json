@@ -30,9 +30,9 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@jvdx/core": "^2.3.6",
+    "@jvdx/core": "^2.3.7",
     "isomorphic-fetch": "^3.0.0",
-    "msw": "^0.29.0"
+    "msw": "^0.33.0"
   },
   "prettier": "@jvdx/prettier-config",
   "prettierIgnore": [
