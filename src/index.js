@@ -45,7 +45,12 @@ export function request(url, options = {}) {
 	let customHeaders = {};
 	let data = options.data;
 
-	if (data && typeof data === 'object' && typeof data.append !== 'function') {
+	if (
+		data &&
+		typeof data === 'object' &&
+		typeof data.append !== 'function' &&
+		toString.call(data) !== '[object File]'
+	) {
 		data = JSON.stringify(data);
 		customHeaders['content-type'] = 'application/json';
 	}
