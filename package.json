@@ -17,7 +17,7 @@
   "module": "dist/request-lit.m.js",
   "exports": {
     "require": "./dist/request-lit.js",
-    "default": "./dist/request-lit.modern.js"
+    "import": "./dist/request-lit.modern.js"
   },
   "types": "dist/index.d.ts",
   "files": [
