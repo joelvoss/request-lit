@@ -12,11 +12,12 @@
     "type": "git",
     "url": "git+https://github.com/joelvoss/request-lit.git"
   },
+  "type": "module",
   "source": "src/index.js",
-  "main": "dist/request-lit.js",
-  "module": "dist/request-lit.m.js",
+  "main": "dist/request-lit.cjs",
+  "module": "dist/request-lit.module.js",
   "exports": {
-    "require": "./dist/request-lit.js",
+    "require": "./dist/request-lit.cjs",
     "import": "./dist/request-lit.modern.js"
   },
   "types": "dist/index.d.ts",
