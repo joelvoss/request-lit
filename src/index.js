@@ -109,43 +109,88 @@ export function request(url, options = {}) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * get
+ * @param {string} url
+ * @param {Options} config
+ */
 request.get = (url, config) =>
 	request(url, {
 		...config,
 		method: 'get',
 	});
+
+/**
+ * delete
+ * @param {string} url
+ * @param {Options} config
+ */
 request.delete = (url, config) =>
 	request(url, {
 		...config,
 		method: 'delete',
 	});
+
+/**
+ * head
+ * @param {string} url
+ * @param {Options} config
+ */
 request.head = (url, config) =>
 	request(url, {
 		...config,
 		method: 'head',
 	});
+
+/**
+ * options
+ * @param {string} url
+ * @param {Options} config
+ */
 request.options = (url, config) =>
 	request(url, {
 		...config,
 		method: 'options',
 	});
+
+/**
+ * post
+ * @param {string} url
+ * @param {Object} data
+ * @param {Options} config
+ */
 request.post = (url, data, config) =>
 	request(url, {
 		...config,
 		data,
 		method: 'post',
 	});
+
+/**
+ * put
+ * @param {string} url
+ * @param {Object} data
+ * @param {Options} config
+ */
 request.put = (url, data, config) =>
 	request(url, {
 		...config,
 		data,
 		method: 'put',
 	});
+
+/**
+ * patch
+ * @param {string} url
+ * @param {Object} data
+ * @param {Options} config
+ */
 request.patch = (url, data, config) =>
 	request(url, {
 		...config,
 		data,
 		method: 'patch',
 	});
+
 request.CancelToken =
 	typeof AbortController == 'function' ? AbortController : Object;
