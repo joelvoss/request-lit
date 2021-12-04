@@ -79,7 +79,7 @@ export function request(url, options = {}) {
 	return _fetch(url, {
 		method: options.method,
 		body: data,
-		headers: deepMerge(options.headers, customHeaders, true),
+		headers: deepMerge(customHeaders, options.headers, true),
 		credentials: options.withCredentials ? 'include' : 'same-origin',
 	}).then(res => {
 		for (const i in res) {

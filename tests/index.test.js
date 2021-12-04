@@ -2,7 +2,7 @@ import fetch from 'isomorphic-fetch';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { request } from '../src/index';
-import { FormData } from './text-utils';
+import { FormData, File } from './text-utils';
 
 describe('request', () => {
 	const server = setupServer(
@@ -187,6 +187,57 @@ describe('request', () => {
 				global.fetch = oldFetch;
 			}
 		});
+
+		it('should merge headers and overwrite internal ones', async () => {
+			const oldFetch = global.fetch;
+			try {
+				global.fetch = jest.fn().mockReturnValue(
+					Promise.resolve({
+						ok: true,
+						status: 200,
+						text: () => Promise.resolve('hello'),
+					}),
+				);
+
+				// NOTE(joel): Make sure we're actually setting an internal header here.
+				await request('/', { data: { some: 'data' } });
+				expect(global.fetch.mock.calls[0][1].headers).toEqual({
+					'content-type': 'application/json',
+				});
+
+				global.fetch.mockClear();
+
+				await request('/', {
+					data: { some: 'data' },
+					headers: {
+						'content-type': 'not-application/json',
+					},
+				});
+				expect(global.fetch.mock.calls[0][1].headers).toEqual({
+					'content-type': 'not-application/json',
+				});
+			} finally {
+				global.fetch = oldFetch;
+			}
+		});
+
+		it('should not set content-type for files', async () => {
+			const oldFetch = global.fetch;
+			try {
+				global.fetch = jest.fn().mockReturnValue(
+					Promise.resolve({
+						ok: true,
+						status: 200,
+						text: () => Promise.resolve('hello'),
+					}),
+				);
+
+				await request('/', { data: new File([], 'test-file') });
+				expect(global.fetch.mock.calls[0][1].headers).toEqual({});
+			} finally {
+				global.fetch = oldFetch;
+			}
+		});
 	});
 
 	describe('request bodies', () => {
@@ -240,9 +291,13 @@ describe('request', () => {
 		it('should preserve global content-type option when using FormData', async () => {
 			const data = new FormData();
 			data.append('hello', 'world');
-			const res = await request.post('http://mocked-server/post-formdata', data, {
-				headers: { 'content-type': 'multipart/form-data' },
-			});
+			const res = await request.post(
+				'http://mocked-server/post-formdata',
+				data,
+				{
+					headers: { 'content-type': 'multipart/form-data' },
+				},
+			);
 			expect(fetchMock).toHaveBeenCalledTimes(1);
 			expect(fetchMock).toHaveBeenCalledWith(
 				'http://mocked-server/post-formdata',
@@ -326,12 +381,14 @@ describe('request', () => {
 		it('should accept a custom paramsSerializer function', async () => {
 			const params = { a: 1, b: true };
 			const paramsSerializer = params => 'e=iserializehere';
-			await request.get('http://mocked-server/foo', { params, paramsSerializer });
+			await request.get('http://mocked-server/foo', {
+				params,
+				paramsSerializer,
+			});
 			expect(fetchMock).toHaveBeenCalledWith(
 				'http://mocked-server/foo?e=iserializehere',
 				expect.any(Object),
 			);
 		});
 	});
-
 });
