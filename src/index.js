@@ -4,7 +4,7 @@ import { deepMerge } from './deep-merge';
 
 /**
  * @typedef Options
- * @prop {string} url
+ * @prop {string} [url]
  * @prop {'get'|'post'|'put'|'patch'|'delete'|'options'|'head'|'GET'|'POST'|'PUT'|'PATCH'|'DELETE'|'OPTIONS'|'HEAD'} [method='get']
  * @prop {Headers} [headers]
  * @prop {FormData|string|object} [body]
@@ -22,11 +22,15 @@ import { deepMerge } from './deep-merge';
 
 /**
  * makeRequest
- * @param {string} url
+ * @param {string} [url]
  * @param {Options} [options={}]
+ * @returns {Promise<{config: Options, data: any}>} 
  */
 export function request(url, options = {}) {
 	if (typeof url !== 'string') {
+		if (typeof options.url !== 'string') {
+			throw new Error('You have to supply a url either through the param or the options');
+		}
 		options = url;
 		url = options.url;
 	}
@@ -62,6 +66,7 @@ export function request(url, options = {}) {
 	if (options.auth) {
 		customHeaders.authorization = options.auth;
 	}
+
 	if (options.baseURL) {
 		url = url.replace(/^(?!.*\/\/)\/?(.*)$/, options.baseURL + '/$1');
 	}
