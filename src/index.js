@@ -22,7 +22,7 @@ import { deepMerge } from './deep-merge';
 
 /**
  * makeRequest
- * @param {string} [url]
+ * @param {string | object} [url]
  * @param {Options} [options={}]
  * @returns {Promise<{config: Options, data: any}>} 
  */
