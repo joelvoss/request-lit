@@ -3,8 +3,13 @@ import { deepMerge } from './deep-merge';
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
+ * @typedef Headers
+ * @type {{[name: string]: string}}
+ */
+
+/**
  * @typedef Options
- * @prop {string} url
+ * @prop {string} [url]
  * @prop {'get'|'post'|'put'|'patch'|'delete'|'options'|'head'|'GET'|'POST'|'PUT'|'PATCH'|'DELETE'|'OPTIONS'|'HEAD'} [method='get']
  * @prop {Headers} [headers]
  * @prop {FormData|string|object} [body]
@@ -21,16 +26,37 @@ import { deepMerge } from './deep-merge';
  */
 
 /**
- * makeRequest
- * @param {string} url
+ * @typedef Response
+ * @prop {number} status
+ * @prop {string} statusText
+ * @prop {Options} config
+ * @prop {T} data
+ * @prop {Headers} headers
+ * @prop {boolean} redirect
+ * @prop {string} url
+ * @prop {ResponseType} type
+ * @prop {ReadableStream<Uint8Array> | null} body
+ * @prop {boolean} bodyUsed
+ * @template T
+ */
+
+/**
+ * request
+ * @param {string | Options} url
  * @param {Options} [options={}]
+ * @returns {Promise<Response<T>>}
+ * @template T
  */
 export function request(url, options = {}) {
 	if (typeof url !== 'string') {
+		if (typeof options.url !== 'string') {
+			throw new TypeError(`Missing required 'options.url'.`);
+		}
 		options = url;
 		url = options.url;
 	}
 
+	/** @type {Options} */
 	options = {
 		method: 'get',
 		fetch,
@@ -41,7 +67,10 @@ export function request(url, options = {}) {
 	// NOTE(joel): Make sure HTTP methods are uppercased
 	options.method = options.method.toUpperCase();
 
+	/** @type {Response<any>} */
 	let response = { config: options };
+
+	/** @type {Headers} */
 	let customHeaders = {};
 	let data = options.data;
 
@@ -62,6 +91,7 @@ export function request(url, options = {}) {
 	if (options.auth) {
 		customHeaders.authorization = options.auth;
 	}
+
 	if (options.baseURL) {
 		url = url.replace(/^(?!.*\/\/)\/?(.*)$/, options.baseURL + '/$1');
 	}
@@ -110,55 +140,44 @@ export function request(url, options = {}) {
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * get
- * @param {string} url
- * @param {Options} config
+ * @typedef BodylessMethod
+ * @type {<T=any>(url: string, config?: Options) => Promise<Response<T>>}
  */
+
+/**
+ * @typedef BodyMethod
+ * @type {<T=any>(url: string, body?: any, config?: Options) => Promise<Response<T>>}
+ */
+
+/** @type {BodylessMethod} */
 request.get = (url, config) =>
 	request(url, {
 		...config,
 		method: 'get',
 	});
 
-/**
- * delete
- * @param {string} url
- * @param {Options} config
- */
+/** @type {BodylessMethod} */
 request.delete = (url, config) =>
 	request(url, {
 		...config,
 		method: 'delete',
 	});
 
-/**
- * head
- * @param {string} url
- * @param {Options} config
- */
+/** @type {BodylessMethod} */
 request.head = (url, config) =>
 	request(url, {
 		...config,
 		method: 'head',
 	});
 
-/**
- * options
- * @param {string} url
- * @param {Options} config
- */
+/** @type {BodylessMethod} */
 request.options = (url, config) =>
 	request(url, {
 		...config,
 		method: 'options',
 	});
 
-/**
- * post
- * @param {string} url
- * @param {Object} data
- * @param {Options} config
- */
+/** @type {BodyMethod} */
 request.post = (url, data, config) =>
 	request(url, {
 		...config,
@@ -166,12 +185,7 @@ request.post = (url, data, config) =>
 		method: 'post',
 	});
 
-/**
- * put
- * @param {string} url
- * @param {Object} data
- * @param {Options} config
- */
+/** @type {BodyMethod} */
 request.put = (url, data, config) =>
 	request(url, {
 		...config,
@@ -179,12 +193,7 @@ request.put = (url, data, config) =>
 		method: 'put',
 	});
 
-/**
- * patch
- * @param {string} url
- * @param {Object} data
- * @param {Options} config
- */
+/** @type {BodyMethod} */
 request.patch = (url, data, config) =>
 	request(url, {
 		...config,
@@ -192,5 +201,6 @@ request.patch = (url, data, config) =>
 		method: 'patch',
 	});
 
+/** @type {AbortController | Object} */
 request.CancelToken =
 	typeof AbortController == 'function' ? AbortController : Object;
