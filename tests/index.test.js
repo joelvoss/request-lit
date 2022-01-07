@@ -391,4 +391,35 @@ describe('request', () => {
 			);
 		});
 	});
+
+	describe('missing request URL', () => {
+		const errorMsg = `Missing required 'options.url'.`;
+
+		it('should throw a TypeError of no request URL is present (no options)', async () => {
+			try {
+				await request.get(null);
+			} catch (e) {
+				expect(e instanceof TypeError).toBe(true);
+				expect(e.message).toBe(errorMsg);
+			}
+		});
+
+		it('should throw a TypeError of no request URL is given (missing options.url)', async () => {
+			try {
+				await request.get(null, {});
+			} catch (e) {
+				expect(e instanceof TypeError).toBe(true);
+				expect(e.message).toBe(errorMsg);
+			}
+		});
+
+		it('should throw a TypeError of no request URL is given (invalid options.url)', async () => {
+			try {
+				await request.get(null, { url: 1 });
+			} catch (e) {
+				expect(e instanceof TypeError).toBe(true);
+				expect(e.message).toBe(errorMsg);
+			}
+		});
+	});
 });
