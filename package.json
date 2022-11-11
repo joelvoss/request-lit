@@ -17,6 +17,7 @@
   "main": "dist/request-lit.cjs",
   "module": "dist/request-lit.module.js",
   "exports": {
+    "types": "./dist/index.d.ts",
     "require": "./dist/request-lit.cjs",
     "import": "./dist/request-lit.modern.js"
   },
@@ -31,9 +32,9 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@jvdx/core": "^3.0.0",
+    "@jvdx/core": "^3.1.0",
     "isomorphic-fetch": "^3.0.0",
-    "msw": "^0.47.4"
+    "msw": "^0.48.1"
   },
   "prettier": "@jvdx/prettier-config",
   "prettierIgnore": [
