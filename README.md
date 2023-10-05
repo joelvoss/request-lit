@@ -4,10 +4,6 @@ Small Promise based HTTP client using the browser's native [Fetch API][fetch],
 which is [supported in all modern browsers](https://caniuse.com/#feat=fetch)
 and polyfilled by most tools including Next.js or Create React App.
 
-## Requirements
-
-- [Fetch API][fetch]
-
 ## Install
 
 ```bash
