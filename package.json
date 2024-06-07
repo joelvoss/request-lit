@@ -2,7 +2,7 @@
   "name": "request-lit",
   "description": "Small Promise based HTTP client",
   "version": "1.5.1",
-  "author": "Joel Voss <mail@joelvoss.com",
+  "author": "Joel Voss <mail@joelvoss.com>",
   "license": "MIT",
   "homepage": "https://github.com/joelvoss/request-lit",
   "bugs": {
@@ -16,38 +16,37 @@
     "node": ">=18"
   },
   "type": "module",
-  "source": "src/index.js",
-  "main": "dist/request-lit.cjs",
-  "module": "dist/request-lit.module.js",
-  "exports": {
-    "types": "./dist/index.d.ts",
-    "require": "./dist/request-lit.cjs",
-    "import": "./dist/request-lit.modern.js"
-  },
-  "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "LICENSE"
+    "LICENSE",
+    "README.md"
   ],
+  "source": "./src/index.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.js",
+    "require": "./dist/index.cjs"
+  },
   "scripts": {
     "test": "./Taskfile.sh test",
-    "prepublishOnly": "./Taskfile.sh build"
+    "build": "./Taskfile.sh build"
   },
-  "dependencies": {},
   "devDependencies": {
-    "@jvdx/core": "^3.6.0",
-    "isomorphic-fetch": "^3.0.0",
-    "msw": "^1.3.2"
+    "@jvdx/eslint-config": "^4.3.0",
+    "@jvdx/prettier-config": "^0.3.4",
+    "@types/node": "^20.14.2",
+    "msw": "^2.3.1",
+    "prettier": "^3.3.1",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.13",
+    "vite-plugin-dts": "^3.9.1",
+    "vitest": "^1.6.0"
   },
   "prettier": "@jvdx/prettier-config",
   "prettierIgnore": [
-    "tests/",
-    "dist/"
-  ],
-  "eslintConfig": {
-    "extends": "@jvdx/eslint-config"
-  },
-  "eslintIgnore": [
     "tests/",
     "dist/"
   ]
