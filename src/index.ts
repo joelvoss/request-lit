@@ -61,7 +61,7 @@ export async function request(
 	const res = await fetch(input, init);
 
 	const ok =
-		typeof validateStatus == 'function' ? validateStatus(res.status) : res.ok;
+		typeof validateStatus === 'function' ? validateStatus(res.status) : res.ok;
 	if (!ok) {
 		throw new ResponseError('Bad fetch response', res);
 	}

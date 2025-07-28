@@ -1,6 +1,6 @@
-import { describe, test, expect, beforeAll, afterAll, vi } from 'vitest';
 import { HttpResponse, http } from 'msw';
 import { setupServer } from 'msw/node';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 import { ResponseError, request } from '../src/index';
 
 describe('request', () => {
