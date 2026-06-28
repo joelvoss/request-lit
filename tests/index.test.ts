@@ -1,6 +1,7 @@
 import { HttpResponse, http } from 'msw';
 import { setupServer } from 'msw/node';
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
+
 import { ResponseError, request } from '../src/index';
 
 describe('request', () => {
